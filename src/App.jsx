@@ -1,41 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TaskForm from './components/TaskForm'
 import Tasks from './components/Tasks'
 import { v4 } from 'uuid'
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: 'Estudar programação',
-      description: 'Estudar conteúdo do curso',
-      isCompleted: false
-    },
-    {
-      id: 2,
-      title: 'Fazer compra',
-      description: 'Arroz, feijão, farinha',
-      isCompleted: false
-    },
-    {
-      id: 3,
-      title: 'Capinar quintal',
-      description: 'Limpar a área de churrasco',
-      isCompleted: false
-    },
-    {
-      id: 4,
-      title: 'Enviar email para empresa',
-      description: '',
-      isCompleted: false
-    },
-    {
-      id: 5,
-      title: 'Ler livro da série',
-      description: 'Livro- O retorno',
-      isCompleted: true
-    }
-  ])
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")) || []
+  );
+
+  useEffect(()=> {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   function addTask(title, description) {
     const newTask = {
